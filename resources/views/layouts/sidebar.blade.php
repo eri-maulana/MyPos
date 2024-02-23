@@ -3,7 +3,7 @@
     <!-- Brand Logo -->
     <a href="/" class="brand-link bg-light ">
         <img src="{{ asset('img/logo.png') }}" alt="Logo"
-            class="user-image img-circle" style="opacity: .8; width: 40px;">
+            class="brand-image img-circle" style="opacity: .8; width: 40px;">
         <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
     </a>
 
@@ -12,8 +12,8 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('img/logo.png') }}" class="img-circle elevation-2"
-                    alt="User Image"  style="opacity: .8; width: 40px;">
+                <img src="{{ asset('img/logo.png') }}" class="brand-image img-circle"
+                    alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block">{{ auth()->user()->name }}</a>
@@ -38,7 +38,7 @@
                 </li>
                 <li class="nav-header">MASTER</li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('kategori.index') }}" class="nav-link">
                        <i class="fas fa-cube mr-2"></i>
                         <p>
                             Kategori
