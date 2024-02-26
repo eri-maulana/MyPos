@@ -18,22 +18,31 @@
                     <div class="card-header">
                         <button onclick="addForm('{{ route('produk.store') }}')" class="btn btn-dark btn-xs btn-flat "><i
                                 class="fa fa-plus-circle"> Tambah</i></button>
+                        <button onclick="deleteSelected('{{ route('produk.delete_selected') }}')"
+                            class="btn btn-danger btn-xs btn-flat "><i class="fa fa-trash-alt"> Hapus</i></button>
+
                     </div>
                     <div class="card-body table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
-                                <th width="5%">No</th>
-                                <th>Kode</th>
-                                <th>Nama</th>
-                                <th>Kategori</th>
-                                <th>Merk</th>
-                                <th>Harga Beli</th>
-                                <th>Harga Jual</th>
-                                <th>Diskon</th>
-                                <th>Stok</th>
-                                <th width="15%" class="text-center"><i class="fa fa-cog"></i></th>
-                            </thead>
-                        </table>
+                        <form action="" class="form-produk">
+                            @csrf
+                            <table class="table table-bordered">
+                                <thead>
+                                    <th>
+                                        <input type="checkbox" name="select_all" id="select_all">
+                                    </th>
+                                    <th width="5%">No</th>
+                                    <th>Kode</th>
+                                    <th>Nama</th>
+                                    <th>Kategori</th>
+                                    <th>Merk</th>
+                                    <th>Harga Beli</th>
+                                    <th>Harga Jual</th>
+                                    <th>Diskon</th>
+                                    <th>Stok</th>
+                                    <th width="15%" class="text-center"><i class="fa fa-cog"></i></th>
+                                </thead>
+                            </table>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -54,6 +63,9 @@
                     url: '{{ route('produk.data') }}',
                 },
                 columns: [{
+                        data: 'select_all'
+                    },
+                    {
                         data: 'DT_RowIndex',
                         searchable: false,
                         sortable: false
@@ -102,7 +114,12 @@
                         });
                 }
             })
+
+            $('[name=select_all]').on('click', function() {
+                $(':checkbox').prop('checked', this.checked);
+            })
         });
+
         function addForm(url) {
             $('#modal-form').modal('show');
             $('#modal-form .modal-title').text('Tambah Produk');
@@ -111,6 +128,7 @@
             $('#modal-form [name=_method]').val('post');
             $('#modal-form [name=nama_kategori]').focus();
         }
+
         function editForm(url) {
             $('#modal-form').modal('show');
             $('#modal-form .modal-title').text('Ubah Produk');
@@ -133,6 +151,7 @@
                     return;
                 })
         }
+
         function deleteData(url) {
             if (confirm('yakin ingin menghapus data? '))
                 $.post(url, {
@@ -146,6 +165,24 @@
                     alert('tidak dapat menghapus data');
                     return;
                 });
+        }
+
+        function deleteSelected(url) {
+            if ($('input:checked').length > 1) {
+                if (confirm('yakin ingin menghapus data terpilih ?')) {
+                    $.post(url, $('.form-produk').serialize())
+                        .done((response) => {
+                            table.ajax.reload();
+                        })
+                        .fail((errors) => {
+                            alert('tidak dapat menghapus data');
+                            return;
+                        });
+                }
+            } else {
+                alert('pilih data yang akan dihapus! ');
+                return;
+            }
         }
     </script>
 @endpush
