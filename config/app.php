@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
+use Barryvdh\DomPDF\Facade as PDF;
 
 return [
 
@@ -159,6 +160,8 @@ return [
         /*
          * Package Service Providers...
          */Yajra\DataTables\DataTablesServiceProvider::class,
+        Milon\Barcode\BarcodeServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         
 
@@ -186,8 +189,13 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
+        // Datatable
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        // DomPDF
+        'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
+        // Barcode
+        'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
+        'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
 
     ])->toArray(),
 
